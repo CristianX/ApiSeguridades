@@ -16,7 +16,7 @@ router.get('/decrypt/:email', async( req, res ) => {
             email: emailDecrypt
         });
     } catch (error) {
-        
+        console.log(error);
     }
 });
 
@@ -31,7 +31,7 @@ router.get('/encrypt/:email', async( req, res ) => {
             email: emailDecrypt
         });
     } catch (error) {
-        
+        console.log(error);
     }
 });
 
