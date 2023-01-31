@@ -1,6 +1,6 @@
 const {mongoose} = require('mongoose')
 
-mongoose.connect("mongodb://root:root@localhost:6400/BDDTextil?authSource=admin",{
+mongoose.connect("mongodb://127.0.0.1:27017/BDDTextil",{
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
