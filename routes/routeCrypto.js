@@ -10,11 +10,7 @@ router.get('/decrypt/:email', async( req, res ) => {
     try {
         const emailDecrypt = decrypt(email);
         res.status(200);
-        res.json({
-            success: true,
-            message: 'Email desencriptado',
-            email: emailDecrypt
-        });
+        res.send(emailDecrypt);
     } catch (error) {
         console.log(error);
     }
@@ -25,11 +21,7 @@ router.get('/encrypt/:email', async( req, res ) => {
     try {
         const emailDecrypt = encrypt(email);
         res.status(200);
-        res.json({
-            success: true,
-            message: 'Email desencriptado',
-            email: emailDecrypt
-        });
+        res.send(emailDecrypt);
     } catch (error) {
         console.log(error);
     }
