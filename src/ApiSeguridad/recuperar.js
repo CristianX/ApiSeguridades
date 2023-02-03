@@ -50,12 +50,13 @@ router.put('/:correo/:codigo', async (req, res) => {
     const { correo } = req.params;
     const { codigo } = req.params;
 
-    correo_encrypt = encrypt(correo)
+    correo_encrypt = encrypt(correo);
+    codigo_encrypt = encrypt(codigo);
 
     var newvalues = {
         $set: {
             UsuRecuperacion: "Si",
-            UsuPassword: codigo,
+            UsuPassword: codigo_encrypt,
         }
     };
 
@@ -70,8 +71,11 @@ router.put('/:correo/:codigo', async (req, res) => {
     var transporter = nodemailer.createTransport({
         service: 'hotmail',
         auth: {
-            user: 'daed_sa@hotmail.com',
-            pass: 'L4nnister'
+            user: 'danitex_2008@hotmail.com',
+            pass: 'danitex2008'
+        },
+        tls: {
+            rejectUnauthorized: false
         }
     });
 
@@ -80,7 +84,7 @@ router.put('/:correo/:codigo', async (req, res) => {
         texto_men += "Acceda al siguiente link para recuperar su contraseña: http://localhost:3000/Recuperar" + "<br /><br />"
 
     var mailOptions = {
-        from: 'daed_sa@hotmail.com',
+        from: 'danitex_2008@hotmail.com',
         to: correo,
         subject: 'Recuperación de contraseña DANITEX',
         html: texto_men
