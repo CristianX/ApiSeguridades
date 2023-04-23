@@ -16,6 +16,7 @@ router.get('/:codigo', async (req, res) => {
             .toArray();
         res.send(x[0]._id);
     } catch (error) {
+        res.status(400);
         res.json("Error en la API: /usuario");
     }
 });
@@ -62,7 +63,7 @@ router.put('/:correo/:codigo', async (req, res) => {
 
     var myquery = { UsuEmail: correo_encrypt };
 
-    db.collection("ColUsuarios").updateOne(myquery, newvalues, function (err, res) {
+    await db.collection("ColUsuarios").updateOne(myquery, newvalues, function (err, res) {
         if (err) throw err;
     });
     
@@ -99,6 +100,36 @@ router.put('/:correo/:codigo', async (req, res) => {
             res.json("Verifique su correo electronico");
         }
     });
+
+    
+
+});
+
+router.put('/newpass/:correo/:pass', async (req, res) => {
+    const { correo, pass } = req.params;
+
+    correo_encrypt = encrypt(correo);
+    pass_encrypt = encrypt(pass);
+
+    var newvalues = {
+        $set: {
+            UsuRecuperacion: "Si",
+            UsuPassword: pass_encrypt,
+        }
+    };
+
+    var myquery = { UsuEmail: correo_encrypt };
+
+    try {
+        await db.collection("ColUsuarios").updateOne(myquery, newvalues, function (err, res) {
+            if (err) throw err;
+        });
+        res.status(200);
+        res.json("Contraseña actualizada");
+    } catch (error) {
+        res.status(400);
+        res.json("Error al actualizar contraseña");
+    }
 
     
 
