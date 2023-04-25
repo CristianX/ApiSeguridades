@@ -130,8 +130,28 @@ router.put('/newpass/:correo/:pass', async (req, res) => {
         res.status(400);
         res.json("Error al actualizar contraseña");
     }
+});
 
-    
+router.get('/codigo-recuperacion/:correo/:codigo', async (req, res) => {
+    const { correo, codigo } = req.params;
+
+    correo_encrypt = encrypt(correo);
+    codigo_encrypt = encrypt(codigo);
+
+    try {
+        const doc = await db.collection("ColUsuarios").findOne({ UsuEmail: correo_encrypt });
+        if (doc.UsuPassword == codigo_encrypt) {
+            res.status(200);
+            res.json("Código coincide");
+        } else {
+            res.status(200);
+            res.json("Código erróneo");
+        }
+        
+    } catch (error) {
+        res.status(400);
+        res.json("Error en la API: /usuario");
+    }
 
 });
 
